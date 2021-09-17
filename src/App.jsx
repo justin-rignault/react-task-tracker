@@ -1,28 +1,36 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
+import AddTask from './components/AddTask'
 
 function App() {
+  const [ showAddTask , setShowAddTask ] = useState(false)
   const [ tasks, setTasks ] = useState([
       {
           id: 1,
           text: "Doctor's Appointment",
-          day: 'Feb 5th at 2:30pm',
+          day: 'Sep 5th at 2:30pm',
           reminder: true
       },
       {
           id: 2,
           text: "School Meeting",
-          day: 'Feb 6th at 12:30pm',
+          day: 'Sep 6th at 12:30pm',
           reminder: true
       },
       {
           id: 3,
           text: "Grocery Shopping",
-          day: 'Feb 5th at 6:30pm',
+          day: 'Sep 5th at 6:30pm',
           reminder: false
       }
   ])
+
+  const addTask = task => {
+    const id = tasks[tasks.length - 1].id + 1
+    const newTask = { id, ...task }
+    setTasks([...tasks, newTask])
+  }
 
   const deleteTask = id => {
     setTasks(tasks.filter( task => task.id !== id))
@@ -34,7 +42,8 @@ function App() {
 
   return (
     <div className="container">
-      <Header/>
+      <Header openAddForm={ () => setShowAddTask(!showAddTask) } showAddTask={showAddTask} />
+      { showAddTask && <AddTask onAdd={addTask}/>}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : 'You have no tasks.'}

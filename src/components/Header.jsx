@@ -1,13 +1,11 @@
 import Button from './Button'
 
-const Header = () => {
-    const btnClick = e => {
-        console.log(e)
-    }
+const Header = ({ openAddForm, showAddTask }) => {
+    
     return (
         <header className="header">
             <h1>Task tracker</h1>
-            <Button color="green" text="Add" onClick={btnClick} />
+            <Button color={showAddTask ? 'red' : 'green'} text={showAddTask ? 'Close' : 'Add'} onClick={openAddForm} />
         </header>
     )
 }
