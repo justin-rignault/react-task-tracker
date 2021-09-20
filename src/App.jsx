@@ -58,7 +58,7 @@ function App() {
     <Router>
       <div className="container">
         <Header openAddForm={ () => setShowAddTask(!showAddTask) } showAddTask={showAddTask} />
-        <Route path='/' exact render={props => (
+        <Route path={['/', '/react-task-tracker']} exact render={props => (
           <>
             { showAddTask && <AddTask onAdd={addTask}/>}
             {tasks.length > 0 ? (
