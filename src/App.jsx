@@ -5,6 +5,7 @@ import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import Footer from './components/Footer'
 import About from './components/About'
+import Swal from 'sweetalert2'
 
 function App() {
   const [ showAddTask , setShowAddTask ] = useState(false)
@@ -43,9 +44,16 @@ function App() {
   }
 
   const deleteTask = id => {
-    const newTasks = tasks.filter( task => task.id !== id)
-    setTasks(newTasks)
-    localStorage.setItem('tasks', JSON.stringify(newTasks))
+    Swal.fire({
+      icon: 'warning',
+      text: 'Are you sure you want to delete this task?',
+      showCloseButton: true
+    }).then( e => {
+      if (!e.value) return
+      const newTasks = tasks.filter( task => task.id !== id)
+      setTasks(newTasks)
+      localStorage.setItem('tasks', JSON.stringify(newTasks))
+    })
   }
 
   const toggleReminder = id => {
