@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route  } from 'react-router-dom'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
@@ -29,18 +29,29 @@ function App() {
       }
   ])
 
+  useEffect(() => {
+      if(!localStorage.getItem('tasks')) localStorage.setItem('tasks', JSON.stringify(tasks))
+      else setTasks(JSON.parse(localStorage.getItem('tasks')))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const addTask = task => {
     const id = tasks[tasks.length - 1].id + 1
     const newTask = { id, ...task }
     setTasks([...tasks, newTask])
+    localStorage.setItem('tasks', JSON.stringify([ ...tasks, newTask ]))
   }
 
   const deleteTask = id => {
-    setTasks(tasks.filter( task => task.id !== id))
+    const newTasks = tasks.filter( task => task.id !== id)
+    setTasks(newTasks)
+    localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
 
   const toggleReminder = id => {
-    setTasks(tasks.map( task => task.id === id ? { ...task, reminder: !task.reminder } : task))
+    const updatedTasks = tasks.map( task => task.id === id ? { ...task, reminder: !task.reminder } : task)
+    setTasks(updatedTasks)
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks))
   }
 
   return (
