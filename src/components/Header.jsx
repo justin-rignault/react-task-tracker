@@ -7,7 +7,7 @@ const Header = ({ openAddForm, showAddTask }) => {
     return (
         <header className="header">
             <h1>Task tracker</h1>
-            { location.pathname === '/' && (
+            { (location.pathname === '/' || location.pathname.includes('/react-task-tracker')) && (
                 <Button color={showAddTask ? 'red' : 'green'} text={showAddTask ? 'Close' : 'Add'} onClick={openAddForm} /> 
             )}
         </header>
