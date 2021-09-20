@@ -44,9 +44,10 @@ function App() {
   }
 
   const deleteTask = id => {
+    const { text: taskName } = tasks.find( task => task.id === id)
     Swal.fire({
       icon: 'warning',
-      text: 'Are you sure you want to delete this task?',
+      html: `Are you sure you want to delete <em>${taskName}</em> from your tasks?`,
       showCloseButton: true,
       confirmButtonText: "Yes",
     }).then( e => {
