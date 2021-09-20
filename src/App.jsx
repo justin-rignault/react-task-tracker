@@ -47,7 +47,8 @@ function App() {
     Swal.fire({
       icon: 'warning',
       text: 'Are you sure you want to delete this task?',
-      showCloseButton: true
+      showCloseButton: true,
+      confirmButtonText: "Yes",
     }).then( e => {
       if (!e.value) return
       const newTasks = tasks.filter( task => task.id !== id)
